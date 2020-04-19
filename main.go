@@ -8,7 +8,7 @@ import (
 	"path/filepath"
 	"sync"
 
-	"github.com/RustedDart/overrustle-scraper"
+	"github.com/RustedDart/overrustle-scraper/overrustle"
 )
 
 func main() {

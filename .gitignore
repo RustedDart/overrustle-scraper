@@ -45,4 +45,4 @@
 # Ignore all local history of files
 .history
 
-cmd/scrape/*
+scrape/*
