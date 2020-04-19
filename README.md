@@ -5,3 +5,17 @@ Due to a [request](https://overrustlelogs.net/assets/twitch_email.png) from Twit
 So I decided to create this tool so people can keep their personal twitch chat archive.
 
 This little tool allows you to download all existing chat data from all channels caputred by overrustlelogs.net.
+
+## Usage
+
+Install the tool with go get:
+
+```bash
+go get github.com/RustedDart/overrustle-scraper
+```
+
+This will build the binary in $GOPATH/bin so make sure that $GOPATH is in your PATH.
+
+To run the script simply run the binary.
+
+The script will create a folder called scrape in your current working directory. All logs will be saved in this folder with the same structure as overrustlelogs.net.
