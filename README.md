@@ -4,7 +4,7 @@ Due to a [request](https://overrustlelogs.net/assets/twitch_email.png) from Twit
 
 So I decided to create this tool so people can keep their personal twitch chat archive.
 
-This little tool allows you to download all existing chat data from all channels caputred by overrustlelogs.net.
+This little tool allows you to download all existing chat data from all channels captured by overrustlelogs.net.
 
 I'm not affiliated with overrustlelogs.net or twitch.
 
