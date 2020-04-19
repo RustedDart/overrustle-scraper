@@ -23,5 +23,3 @@ To run the script simply run the binary.
 The script will create a folder called scrape in your current working directory. All logs will be saved in this folder with the same structure as overrustlelogs.net.
 
 The folder will be around 300GB.
-
-
