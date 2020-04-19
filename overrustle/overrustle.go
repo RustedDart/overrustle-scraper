@@ -76,7 +76,7 @@ func (s Streamer) getMonths() ([]string, error) {
 	var months []string
 
 	if err := json.Unmarshal(resp, &months); err != nil {
-		return nil, errors.Wrap(err, "overrustle.Streamer.getMonths.Unmarshal")
+		return nil, errors.Wrap(err, fmt.Sprintf("overrustle.Streamer.getMonths.Unmarshal, url: %s", url))
 	}
 
 	return months, nil
@@ -94,7 +94,7 @@ func (s Streamer) getDaysInMonth(month string) ([]string, error) {
 	var days []string
 
 	if err := json.Unmarshal(resp, &days); err != nil {
-		return nil, errors.Wrap(err, "overrustle.Streamer.getDaysInMonth.Unmarshal")
+		return nil, errors.Wrap(err, fmt.Sprintf("overrustle.Streamer.getDaysInMonth.Unmarshal, url: %s", url))
 	}
 
 	return days, nil

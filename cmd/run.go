@@ -2,7 +2,6 @@
 package cmd
 
 import (
-	"errors"
 	"fmt"
 	"io/ioutil"
 	"log"
@@ -44,10 +43,21 @@ func Run() {
 			fmt.Printf("[%d/%d(%.2f%%)]: %s\n", key+1, len(streamers), percentage, streamer)
 		}
 
-		files, err := streamer.GetAllFileURLs()
+		var files []*overrustle.File
 
-		if err != nil {
-			log.Fatal(err)
+		for i := 0; i < 4; i++ {
+			files, err = streamer.GetAllFileURLs()
+
+			if err != nil {
+				if i == 3 {
+					log.Fatal(err)
+				}
+
+				<-time.After(time.Second * 3)
+				continue
+			} else {
+				break
+			}
 		}
 
 		wg.Add(len(files))
@@ -90,25 +100,21 @@ func startDownloader(pipeline chan *downloadBlock, wg *sync.WaitGroup) {
 
 					if err != nil {
 
-						if errors.Is(err, overrustle.ErrNotOK) {
-							if block.Timeout == time.Duration(time.Second*0) {
-								block.Timeout = time.Duration(time.Second * 2)
-							} else {
-								block.Timeout = time.Duration(block.Timeout * 2)
-							}
-
-							if block.Timeout > time.Duration(time.Minute*1) {
-								log.Fatalln("exit because https://overrustlelogs.net could not be reached for", block.Timeout)
-							}
-
-							log.Println("failed to download", block.File.URL, "timeout for:", block.Timeout)
-
-							wg.Add(1)
-							go func() { pipeline <- block }()
-							return
+						if block.Timeout == time.Duration(time.Second*0) {
+							block.Timeout = time.Duration(time.Second * 2)
+						} else {
+							block.Timeout = time.Duration(block.Timeout * 2)
 						}
 
-						log.Fatalln(err)
+						if block.Timeout > time.Duration(time.Minute*1) {
+							log.Fatalln("exit because https://overrustlelogs.net could not be reached for", block.Timeout)
+						}
+
+						log.Println("failed to download", block.File.URL, "timeout for:", block.Timeout)
+
+						wg.Add(1)
+						go func() { pipeline <- block }()
+
 					}
 
 					txtFilePath := filepath.Join(block.TargetDir, block.File.Filename)
